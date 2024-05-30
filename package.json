@@ -1,0 +1,14 @@
+{
+  "name": "klontong.wran-test.be",
+  "version": "1.0.0",
+  "description": "Klontong App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Wahid Rizqi Akbar Nurjaman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
