@@ -4,13 +4,13 @@ import pool from "../config/db.js";
 import "dotenv/config";
 
 export const register = async (req, res) => {
-	const { name, password } = req.body;
+	const { name, fullname, password } = req.body;
 
 	try {
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const result = await pool.query(
-			"INSERT INTO users (name, password) VALUES ($1, $2) RETURNING *",
-			[name, hashedPassword]
+			"INSERT INTO users (name, fullname, password) VALUES ($1, $2, $3) RETURNING *",
+			[name, fullname, hashedPassword]
 		);
 		res.status(201).json(result.rows[0]);
 	} catch (err) {
@@ -39,9 +39,18 @@ export const login = async (req, res) => {
 		}
 
 		const token = jwt.sign({ userId: user.id }, SECRET_KEY, {
-			expiresIn: "1h",
+			expiresIn: "24h",
 		});
-		res.json({ token });
+		res.json({
+			statusCode: 200, 
+			data: {
+				user: {
+					name: user.name,
+					fullname: user.fullname
+				},
+				token: token
+			}
+		});
 	} catch (err) {
 		res.status(500).json({ error: err.message });
 	}
