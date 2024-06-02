@@ -4,7 +4,7 @@ const productsTable = "public.products";
 
 export const getAllProducts = async (req, res) => {
 	try {
-		const result = await pool.query(`SELECT * FROM ${productsTable}`);
+		const result = await pool.query(`SELECT * FROM ${productsTable} ORDER BY id DESC `);
 		res.json(result.rows);
 	} catch (err) {
 		res.status(500).json({ error: "Server error" });
